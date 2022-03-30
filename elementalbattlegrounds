@@ -1,0 +1,189 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Mental Battlegrounds| Totktoiznitokuda Exploits", "Midnight")
+
+--| TABS |--
+
+-- MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("Main")
+
+
+
+
+MainSection:NewButton("SpeedHack[C]", "Activates Speedhack, Keybind c", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/angeloX041/Speedc/main/SuperSpeedC", true))()
+end)
+
+MainSection:NewButton("Infinity Jump", "Activates Infinity Jump", function()
+    local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+ 
+_G.JumpHeight = 50;
+ 
+function Action(Object, Function) if Object ~= nil then Function(Object); end end
+ 
+UIS.InputBegan:connect(function(UserInput)
+    if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+        Action(Player.Character.Humanoid, function(self)
+            if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                Action(self.Parent.HumanoidRootPart, function(self)
+                    self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                end)
+            end
+        end)
+    end
+end)
+end)
+
+MainSection:NewButton("ClickTP", "Press E to tp to mouse", function()
+    plr = game.Players.LocalPlayer 
+    hum = plr.Character.HumanoidRootPart 
+    mouse = plr:GetMouse() 
+    
+    mouse.KeyDown:connect(function(key) 
+        if key == "e" then 
+            if mouse.Target then
+                hum.CFrame = CFrame.new(mouse.Hit.x, mouse.Hit.y + 5, mouse.Hit.z) 
+            end 
+        end 
+    end)
+end)
+
+MainSection:NewToggle("Autofarm Diamonds", "Grabs all diamonds as they spawn", function(state)
+    enabled = false
+    if state then
+        enabled = true
+    else
+        enabled = false
+    end
+    print(enabled)
+    while enabled == true do
+        local Object = game:GetService("Workspace")[".Ignore"][".ServerEffects"]:WaitForChild("Diamond") -- object to tp to
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Object.CFrame
+            wait(0.1)
+        if enabled == false then
+            break
+        end
+    end
+end)
+
+MainSection:NewToggle("Autofarm Shards", "Grabs all shards as they spawn", function(state)
+    enabled = false
+    if state then
+        enabled = true
+    else
+        enabled = false
+    end
+    print(enabled)
+    while enabled == true do
+        local Object = game:GetService("Workspace")[".Ignore"][".ServerEffects"]:WaitForChild("Shard")
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Object.CFrame
+            wait(0.1)
+        if enabled == false then
+            break
+        end
+    end
+end)
+
+MainSection:NewButton("Float[M]", "Float[M]", function()
+    local testsquadAIR    = {
+        Airwalk    = Enum.KeyCode.M;
+     }
+     
+     local ContextAction = Game:GetService("ContextActionService")
+     local RunService    = Game:GetService("RunService")
+     
+     local function ForEach(t, f)
+        for Index, Value in pairs(t) do
+            f(Value, Index)
+        end
+     end _G.ForEach=ForEach;
+     local function Create(ClassName)
+        local Object = Instance.new(ClassName)
+        return function(Properties)
+            ForEach(Properties, function(Value, Property)
+                Object[Property] = Value
+            end)
+            return Object
+        end
+     end _G.Create=Create;
+     
+     do
+        local airwalkState     = false
+        local currentPart    = nil
+        RunService.RenderStepped:connect(function()
+            if airwalkState then
+                if not currentPart then
+                    warn "On"
+                    currentPart = Create "Part" {
+                        Parent = workspace.CurrentCamera;
+                        Name = "AWP";
+                        Transparency = 1;
+                        Size = Vector3.new(2, 1, 2);
+                        Anchored = true;
+                    }
+                end
+                local character = game.Players.LocalPlayer.Character
+                if character then
+                    currentPart.CFrame = character.HumanoidRootPart.CFrame - Vector3.new(0, 3.6, 0)
+                end
+            else
+                if currentPart then
+                    warn "Off"
+                    currentPart:Destroy()
+                    currentPart = nil
+                end        
+            end
+        end)
+        ContextAction:BindAction("Airwalk", function(_, InputState)
+            if InputState == Enum.UserInputState.Begin then
+                warn "a"
+                airwalkState = not airwalkState
+            end
+        end, false, testsquadAIR.Airwalk)
+     end
+end)
+
+MainSection:NewButton("Esp", "Activates Esp", function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/totktoizniotkuda/scripts/main/Espandaimbot", true))()
+end)
+
+MainSection:NewButton("120 FOV", "120 FOV", function()
+    workspace.CurrentCamera.FieldOfView=120
+end)
+
+MainSection:NewButton("90 FOV", "90 FOV", function()
+    workspace.CurrentCamera.FieldOfView=90
+end)
+
+MainSection:NewButton("Default FOV", "Default FOV", function()
+    workspace.CurrentCamera.FieldOfView=70
+end)
+
+-- PLAYER
+local Player = Window:NewTab("Player")
+local PlayerSection = Player:NewSection("Player")
+
+PlayerSection:NewButton("Right Korblox(Client)", "Right Korblox, only you can see", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/carlcoded/pro/main/rightkorbloxperma'))()
+end)
+
+PlayerSection:NewButton("Headless Head", "Headless Head", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/carlcoded/pro/main/headlessperma'))()
+end)
+
+ -- SETTINGS
+ local Settings = Window:NewTab("Settings")
+ local SettingsSection = Settings:NewSection("Settings")
+
+ SettingsSection:NewKeybind("UI Toggle Keybind", "Toggles Hub UI With Your Keybind", Enum.KeyCode.RightShift, function()
+    Library:ToggleUI()
+end)
+
+-- Credits
+local Credits = Window:NewTab("Credits")
+local CreditsSection = Credits:NewSection("Credits")
+
+CreditsSection:NewLabel("GUI By: Totktoizniotkuda exploits")
+
+CreditsSection:NewLabel("https://discord.gg/gD7RNn9jnz")
